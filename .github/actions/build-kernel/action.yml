@@ -42,6 +42,7 @@ runs:
 
   - name: Build defconfig
     working-directory: ${{ github.workspace }}/kernel
+    shell: bash
     run: |
       make ARCH=arm64 \
         O=/home/runner/out \
@@ -60,6 +61,7 @@ runs:
 
   - name: Build kernel
     working-directory: ${{ github.workspace }}/kernel
+    shell: bash
     run: |
       make ARCH=arm64 \
         O=/home/runner/out \
