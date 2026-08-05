@@ -62,6 +62,7 @@ jobs:
     needs: prepare-ccache
     uses: ./.github/workflows/build.yml
     with:
+      version: "android14-6.1"
       android_version: "android14"
       kernel_version: "6.1"
       sublevel: "157"
