@@ -15,44 +15,9 @@ on:
           - Pre-Release
           - Release
         default: Action
-      feature_set:
-        description: "Feature Set"
-        type: choice
-        options:
-          - KSUN+SUSFS+BBG+NET+DS
-          - KSUN+SUSFS+BBG
-          - KSUN+SUSFS+NET
-          - KSUN+SUSFS+DS
-          - KSUN+SUSFS
-          - KSUN+BBG
-          - KSUN+NET
-          - KSUN+DS
-          - KSUN
-          - NONE
-          - FULL
         default: FULL
       ksu_branch:
         description: "KernelSU branch or commit (empty = latest dev-susfs branch tip)"
-        type: string
-        required: false
-        default: ""
-      susfs_commit_android12-5-10:
-        description: "SUSFS commit for android12-5.10 (empty = latest branch tip)"
-        type: string
-        required: false
-        default: ""
-      susfs_commit_android13-5-10:
-        description: "SUSFS commit for android13-5.10 (empty = latest branch tip)"
-        type: string
-        required: false
-        default: ""
-      susfs_commit_android13-5-15:
-        description: "SUSFS commit for android13-5.15 (empty = latest branch tip)"
-        type: string
-        required: false
-        default: ""
-      susfs_commit_android14-5-15:
-        description: "SUSFS commit for android14-5.15 (empty = latest branch tip)"
         type: string
         required: false
         default: ""
@@ -61,17 +26,6 @@ on:
         type: string
         required: false
         default: ""
-      susfs_commit_android15-6-6:
-        description: "SUSFS commit for android15-6.6 (empty = latest branch tip)"
-        type: string
-        required: false
-        default: ""
-      susfs_commit_android16-6-12:
-        description: "SUSFS commit for android16-6.12 (empty = latest branch tip)"
-        type: string
-        required: false
-        default: ""
-
 jobs:
   prepare-ccache:
     name: Prepare ccache binary (download once)
