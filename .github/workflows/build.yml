@@ -6,9 +6,6 @@ permissions:
 on:
   workflow_call:
     inputs:
-      version:
-        required: true
-        type: string
       android_version:
         required: true
         type: string
@@ -20,21 +17,9 @@ on:
         type: string
       os_patch_level:
         required: true
-        type: string
-      variant:
-        required: false
-        type: string
       feature_set:
         required: true
         type: string
-      ksu_branch:
-        required: false
-        type: string
-        default: ""
-      susfs_commit:
-        required: false
-        type: string
-        default: ""
 
 jobs:
   build-gki:
