@@ -46,18 +46,18 @@ runs:
     run: |
       make ARCH=arm64 \
         O=/home/runner/out \
-        CC=$GITHUB_WORKSPACE/neutron-clang/bin/clang \
-        LD=$GITHUB_WORKSPACE/neutron-clang/bin/ld.lld \
-        AR=$GITHUB_WORKSPACE/neutron-clang/bin/llvm-ar \
-        NM=$GITHUB_WORKSPACE/neutron-clang/bin/llvm-nm \
-        OBJCOPY=$GITHUB_WORKSPACE/neutron-clang/bin/llvm-objcopy \
-        OBJDUMP=$GITHUB_WORKSPACE/neutron-clang/bin/llvm-objdump \
-        STRIP=$GITHUB_WORKSPACE/neutron-clang/bin/llvm-strip \
-        CROSS_COMPILE=$GITHUB_WORKSPACE/neutron-clang/bin/aarch64-linux-gnu- \
-        CROSS_COMPILE_COMPAT=$GITHUB_WORKSPACE/neutron-clang/bin/arm-linux-gnueabi- \
+        CC=${{ github.workspace }}/neutron-clang/bin/clang \
+        LD=${{ github.workspace }}/neutron-clang/bin/ld.lld \
+        AR=${{ github.workspace }}/neutron-clang/bin/llvm-ar \
+        NM=${{ github.workspace }}/neutron-clang/bin/llvm-nm \
+        OBJCOPY=${{ github.workspace }}/neutron-clang/bin/llvm-objcopy \
+        OBJDUMP=${{ github.workspace }}/neutron-clang/bin/llvm-objdump \
+        STRIP=${{ github.workspace }}/neutron-clang/bin/llvm-strip \
+        CROSS_COMPILE=${{ github.workspace }}/neutron-clang/bin/aarch64-linux-gnu- \
+        CROSS_COMPILE_COMPAT=${{ github.workspace }}/neutron-clang/bin/arm-linux-gnueabi- \
         LLVM=1 \
         LLVM_IAS=1 \
-        -j$(nproc --all) ${{ inputs.codename }}_defconfig
+        -j$(nproc --all) gki_defconfig
 
   - name: Build kernel
     working-directory: ${{ github.workspace }}/kernel
@@ -65,15 +65,15 @@ runs:
     run: |
       make ARCH=arm64 \
         O=/home/runner/out \
-        CC=$GITHUB_WORKSPACE/neutron-clang/bin/clang \
-        LD=$GITHUB_WORKSPACE/neutron-clang/bin/ld.lld \
-        AR=$GITHUB_WORKSPACE/neutron-clang/bin/llvm-ar \
-        NM=$GITHUB_WORKSPACE/neutron-clang/bin/llvm-nm \
-        OBJCOPY=$GITHUB_WORKSPACE/neutron-clang/bin/llvm-objcopy \
-        OBJDUMP=$GITHUB_WORKSPACE/neutron-clang/bin/llvm-objdump \
-        STRIP=$GITHUB_WORKSPACE/neutron-clang/bin/llvm-strip \
-        CROSS_COMPILE=$GITHUB_WORKSPACE/neutron-clang/bin/aarch64-linux-gnu- \
-        CROSS_COMPILE_COMPAT=$GITHUB_WORKSPACE/neutron-clang/bin/arm-linux-gnueabi- \
+        CC=${{ github.workspace }}/neutron-clang/bin/clang \
+        LD=${{ github.workspace }}/neutron-clang/bin/ld.lld \
+        AR=${{ github.workspace }}/neutron-clang/bin/llvm-ar \
+        NM=${{ github.workspace }}/neutron-clang/bin/llvm-nm \
+        OBJCOPY=${{ github.workspace }}/neutron-clang/bin/llvm-objcopy \
+        OBJDUMP=${{ github.workspace }}/neutron-clang/bin/llvm-objdump \
+        STRIP=${{ github.workspace }}/neutron-clang/bin/llvm-strip \
+        CROSS_COMPILE=${{ github.workspace }}/neutron-clang/bin/aarch64-linux-gnu- \
+        CROSS_COMPILE_COMPAT=${{ github.workspace }}/neutron-clang/bin/arm-linux-gnueabi- \
         LLVM=1 \
         LLVM_IAS=1 \
         LOCALVERSION_AUTO=0 \
