@@ -10,7 +10,7 @@ runs:
       working-directory: ${{ github.workspace }}/kernel
       run: |
         set -euo pipefail
-        git clone https://github.com/TheWildJames/android_kernel_google_tensynos --depth=1 common
+        git clone https://github.com/TheWildJames/zuma-kernel.git --depth=1 .
 
     - name: Capture Kernel Common Commit Metadata
       shell: bash
