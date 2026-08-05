@@ -15,7 +15,6 @@ on:
           - Pre-Release
           - Release
         default: Action
-        default: FULL
       ksu_branch:
         description: "KernelSU branch or commit (empty = latest dev-susfs branch tip)"
         type: string
