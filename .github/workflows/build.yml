@@ -78,11 +78,6 @@ jobs:
           
     - name: Download Kernel Repository
       uses: ./.github/actions/download-kernel
-      with:
-        version: ${{ inputs.version }}
-        android_version: ${{ inputs.android_version }}
-        kernel_version: ${{ inputs.kernel_version }}
-        os_patch_level: ${{ inputs.os_patch_level }}
 
     - name: Build FUSE-BPF Userspace Daemon (Issue #211)
       if: ${{ contains(inputs.version, 'lts') && inputs.version == 'android16-6.12' }}
@@ -390,8 +385,8 @@ jobs:
         
         # Get SUSFS version from susfs.h if available
         SUSFS_VER="N/A"
-        if [ -f "${{ github.workspace }}/kernel/common/include/linux/susfs.h" ]; then
-          SUSFS_VER=$(grep '#define SUSFS_VERSION' "${{ github.workspace }}/kernel/common/include/linux/susfs.h" | awk -F'"' '{print $2}' || echo "N/A")
+        if [ -f "${{ github.workspace }}/kernel/include/linux/susfs.h" ]; then
+          SUSFS_VER=$(grep '#define SUSFS_VERSION' "${{ github.workspace }}/kernel/include/linux/susfs.h" | awk -F'"' '{print $2}' || echo "N/A")
         fi
         
         # Get cache stats from env (set by cache-stats action)

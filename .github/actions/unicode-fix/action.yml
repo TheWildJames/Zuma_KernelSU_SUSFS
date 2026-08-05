@@ -10,7 +10,7 @@ runs:
   steps:
     - name: Apply Unicode Fix Patch
       shell: bash
-      working-directory: ${{ github.workspace }}/kernel/common
+      working-directory: ${{ github.workspace }}/kernel
       run: |
         set -euo pipefail
         echo "Patching unicode!"

@@ -21,7 +21,7 @@ runs:
   using: composite
   steps:
     - name: 'Apply Makefile and parse-options.c fixes for GLIBC >= 2.38'
-      working-directory: ${{ github.workspace }}/kernel/common
+      working-directory: ${{ github.workspace }}/kernel
       shell: bash
       run: |
         set -euo pipefail

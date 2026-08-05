@@ -33,7 +33,7 @@ runs:
       run: |
         set -euo pipefail
 
-        FUSE_DIR="${{ github.workspace }}/kernel/common/tools/testing/selftests/filesystems/fuse"
+        FUSE_DIR="${{ github.workspace }}/kernel/tools/testing/selftests/filesystems/fuse"
 
         if [ ! -d "$FUSE_DIR" ]; then
           echo "ERROR: FUSE selftests directory not found at: $FUSE_DIR"
@@ -58,9 +58,9 @@ runs:
 
         $BPF_CC -target bpf \
           -D__TARGET_ARCH_arm64 \
-          -I "${{ github.workspace }}/kernel/common/include" \
-          -idirafter "${{ github.workspace }}/kernel/common/arch/arm64/include" \
-          -idirafter "${{ github.workspace }}/kernel/common/arch/arm64/include/uapi" \
+          -I "${{ github.workspace }}/kernel/include" \
+          -idirafter "${{ github.workspace }}/kernel/arch/arm64/include" \
+          -idirafter "${{ github.workspace }}/kernel/arch/arm64/include/uapi" \
           -Wall -Werror -O2 -g \
           -emit-llvm -c fd_bpf.c -o fd_bpf.ir
 
@@ -69,7 +69,7 @@ runs:
         else
           $BPF_CC -target bpf \
             -D__TARGET_ARCH_arm64 \
-            -I "${{ github.workspace }}/kernel/common/include" \
+            -I "${{ github.workspace }}/kernel/include" \
             -Wall -Werror -O2 -g \
             -c fd_bpf.c -o fd_bpf.bpf
         fi
@@ -82,7 +82,7 @@ runs:
       run: |
         set -euo pipefail
 
-        FUSE_DIR="${{ github.workspace }}/kernel/common/tools/testing/selftests/filesystems/fuse"
+        FUSE_DIR="${{ github.workspace }}/kernel/tools/testing/selftests/filesystems/fuse"
         cd "$FUSE_DIR"
 
         # Use Android NDK compiler if available, otherwise use system cross-compiler
@@ -106,11 +106,11 @@ runs:
           -D_GNU_SOURCE \
           -D__KERNEL__ \
           -D__EXPORTED_HEADERS__ \
-          -I "${{ github.workspace }}/kernel/common/include/uapi" \
-          -I "${{ github.workspace }}/kernel/common/include" \
-          -I "${{ github.workspace }}/kernel/common/arch/arm64/include" \
-          -I "${{ github.workspace }}/kernel/common/arch/arm64/include/uapi" \
-          -I "${{ github.workspace }}/kernel/common/tools/testing/selftests" \
+          -I "${{ github.workspace }}/kernel/include/uapi" \
+          -I "${{ github.workspace }}/kernel/include" \
+          -I "${{ github.workspace }}/kernel/arch/arm64/include" \
+          -I "${{ github.workspace }}/kernel/arch/arm64/include/uapi" \
+          -I "${{ github.workspace }}/kernel/tools/testing/selftests" \
           -Wall \
           -c bpf_loader.c -o bpf_loader.o 2>&1 || true
 
@@ -121,11 +121,11 @@ runs:
           -D_GNU_SOURCE \
           -D__KERNEL__ \
           -D__EXPORTED_HEADERS__ \
-          -I "${{ github.workspace }}/kernel/common/include/uapi" \
-          -I "${{ github.workspace }}/kernel/common/include" \
-          -I "${{ github.workspace }}/kernel/common/arch/arm64/include" \
-          -I "${{ github.workspace }}/kernel/common/arch/arm64/include/uapi" \
-          -I "${{ github.workspace }}/kernel/common/tools/testing/selftests" \
+          -I "${{ github.workspace }}/kernel/include/uapi" \
+          -I "${{ github.workspace }}/kernel/include" \
+          -I "${{ github.workspace }}/kernel/arch/arm64/include" \
+          -I "${{ github.workspace }}/kernel/arch/arm64/include/uapi" \
+          -I "${{ github.workspace }}/kernel/tools/testing/selftests" \
           -Wall \
           -c fuse_daemon.c -o fuse_daemon.o 2>&1 || true
 
@@ -177,15 +177,15 @@ runs:
         mkdir -p "${{ github.workspace }}/artifacts/fuse-bpf"
 
         # Copy the full daemon if built
-        if [ -f "${{ github.workspace }}/kernel/common/tools/testing/selftests/filesystems/fuse/fuse-daemon-arm64" ]; then
-          cp "${{ github.workspace }}/kernel/common/tools/testing/selftests/filesystems/fuse/fuse-daemon-arm64" \
+        if [ -f "${{ github.workspace }}/kernel/tools/testing/selftests/filesystems/fuse/fuse-daemon-arm64" ]; then
+          cp "${{ github.workspace }}/kernel/tools/testing/selftests/filesystems/fuse/fuse-daemon-arm64" \
             "${{ github.workspace }}/artifacts/fuse-bpf/fuse-daemon"
           echo "Copied full FUSE-BPF daemon"
         fi
 
         # Copy the BPF object
-        if [ -f "${{ github.workspace }}/kernel/common/tools/testing/selftests/filesystems/fuse/fd_bpf.bpf" ]; then
-          cp "${{ github.workspace }}/kernel/common/tools/testing/selftests/filesystems/fuse/fd_bpf.bpf" \
+        if [ -f "${{ github.workspace }}/kernel/tools/testing/selftests/filesystems/fuse/fd_bpf.bpf" ]; then
+          cp "${{ github.workspace }}/kernel/tools/testing/selftests/filesystems/fuse/fd_bpf.bpf" \
             "${{ github.workspace }}/artifacts/fuse-bpf/fd_bpf.bpf"
           echo "Copied fd_bpf.bpf"
         fi

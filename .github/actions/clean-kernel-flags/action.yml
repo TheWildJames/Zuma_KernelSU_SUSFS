@@ -13,6 +13,6 @@ runs:
         sed -i 's/-dirty//' common/scripts/setlocalversion
 
         # Commit changes to avoid dirty state during build
-        cd ${{ github.workspace }}/kernel/common
+        cd ${{ github.workspace }}/kernel
         git add .
         git commit -m "Wild: Clean Dirty Flag"

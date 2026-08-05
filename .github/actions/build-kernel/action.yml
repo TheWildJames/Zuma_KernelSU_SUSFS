@@ -11,12 +11,9 @@ inputs:
 runs:
   using: composite
   steps:
-  - name: Setup Kernel Configs
-    if: false
-    uses: ./.github/actions/set-kernel-config
-  
   - name: 'Build Kernel'
     shell: bash
+    if: false
     working-directory: ${{ github.workspace }}/kernel
     run: |
       sed -i 's/check_defconfig//' ./common/build.config.gki
@@ -43,28 +40,47 @@ runs:
           //common:kernel_aarch64/Image
       fi
 
+  - name: Build defconfig
+    working-directory: ${{ github.workspace }}/kernel
+    run: |
+      make ARCH=arm64 \
+        O=/home/runner/out \
+        CC=$GITHUB_WORKSPACE/neutron-clang/bin/clang \
+        LD=$GITHUB_WORKSPACE/neutron-clang/bin/ld.lld \
+        AR=$GITHUB_WORKSPACE/neutron-clang/bin/llvm-ar \
+        NM=$GITHUB_WORKSPACE/neutron-clang/bin/llvm-nm \
+        OBJCOPY=$GITHUB_WORKSPACE/neutron-clang/bin/llvm-objcopy \
+        OBJDUMP=$GITHUB_WORKSPACE/neutron-clang/bin/llvm-objdump \
+        STRIP=$GITHUB_WORKSPACE/neutron-clang/bin/llvm-strip \
+        CROSS_COMPILE=$GITHUB_WORKSPACE/neutron-clang/bin/aarch64-linux-gnu- \
+        CROSS_COMPILE_COMPAT=$GITHUB_WORKSPACE/neutron-clang/bin/arm-linux-gnueabi- \
+        LLVM=1 \
+        LLVM_IAS=1 \
+        -j$(nproc --all) ${{ inputs.codename }}_defconfig
+
+  - name: Build kernel
+    working-directory: ${{ github.workspace }}/kernel
+    run: |
+      make ARCH=arm64 \
+        O=/home/runner/out \
+        CC=$GITHUB_WORKSPACE/neutron-clang/bin/clang \
+        LD=$GITHUB_WORKSPACE/neutron-clang/bin/ld.lld \
+        AR=$GITHUB_WORKSPACE/neutron-clang/bin/llvm-ar \
+        NM=$GITHUB_WORKSPACE/neutron-clang/bin/llvm-nm \
+        OBJCOPY=$GITHUB_WORKSPACE/neutron-clang/bin/llvm-objcopy \
+        OBJDUMP=$GITHUB_WORKSPACE/neutron-clang/bin/llvm-objdump \
+        STRIP=$GITHUB_WORKSPACE/neutron-clang/bin/llvm-strip \
+        CROSS_COMPILE=$GITHUB_WORKSPACE/neutron-clang/bin/aarch64-linux-gnu- \
+        CROSS_COMPILE_COMPAT=$GITHUB_WORKSPACE/neutron-clang/bin/arm-linux-gnueabi- \
+        LLVM=1 \
+        LLVM_IAS=1 \
+        LOCALVERSION_AUTO=0 \
+        -j$(nproc --all)
+
   - name: 'Gather Build Artifacts'
     shell: bash
     working-directory: ${{ github.workspace }}/kernel
     run: |
       set -euo pipefail
-      if [ -f "bazel-bin/common/kernel_aarch64/Image" ]; then
-        echo "Found Image at bazel-bin/common/kernel_aarch64/Image"
-        if [[ ${{ inputs.bypass }} == "true" ]]; then
-          cp "bazel-bin/common/kernel_aarch64/Image" "${{ github.workspace }}/AnyKernel3/Bypass-Image"
-        else
-          cp "bazel-bin/common/kernel_aarch64/Image" "${{ github.workspace }}/AnyKernel3/Image"
-        fi
-        exit 0
-        fi
-      if [ -f "/home/runner/out/dist/Image" ]; then
-        echo "Found Image at /home/runner/out/dist/Image"
-        if [[ ${{ inputs.bypass }} == "true" ]]; then
-          cp "/home/runner/out/dist/Image" "${{ github.workspace }}/AnyKernel3/Bypass-Image"
-        else
-          cp "/home/runner/out/dist/Image" "${{ github.workspace }}/AnyKernel3/Image"
-        fi
-        exit 0
-      fi
 
-      exit 1
+      cp "/home/runner/out/Image.lz4" "${{ github.workspace }}/AnyKernel3/Image.lz4"

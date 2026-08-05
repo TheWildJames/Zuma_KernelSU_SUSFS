@@ -16,7 +16,7 @@ runs:
   steps:
     - name: Apply Kernel SUSFS Patches
       shell: bash
-      working-directory: ${{ github.workspace }}/kernel/common
+      working-directory: ${{ github.workspace }}/kernel
       run: |
         # Apply base SUSFS patches
         cp "${{ github.workspace }}/susfs4ksu/kernel_patches/fs/"* "${{ github.workspace }}/kernel/common/fs/"
@@ -26,7 +26,7 @@ runs:
     - name: Apply Android 14 6.1 Fake Patches
       shell: bash
       if: inputs.version == 'android14-6.1'
-      working-directory: ${{ github.workspace }}/kernel/common
+      working-directory: ${{ github.workspace }}/kernel
       run: |
         if [ "${{ inputs.sublevel }}" -ge "157" ]; then
           echo "Applying namespace.c Android 14 6.1 Fake Patch"
@@ -35,6 +35,6 @@ runs:
 
     - name: Apply Kernel SUSFS Patches
       shell: bash
-      working-directory: ${{ github.workspace }}/kernel/common
+      working-directory: ${{ github.workspace }}/kernel
       run: |
         patch -p1 < 50_add_susfs_in_gki-${{ inputs.version }}.patch
