@@ -17,6 +17,7 @@ on:
         type: string
       os_patch_level:
         required: true
+        type: string
       feature_set:
         required: true
         type: string
