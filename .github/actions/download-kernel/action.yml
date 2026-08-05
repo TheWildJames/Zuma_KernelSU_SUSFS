@@ -7,10 +7,10 @@ runs:
     - name: Initialize and Sync Kernel Repository
       id: sync
       shell: bash
-      working-directory: ${{ github.workspace }}/kernel
+      working-directory: ${{ github.workspace }}
       run: |
         set -euo pipefail
-        git clone https://github.com/TheWildJames/zuma-kernel.git --depth=1 .
+        git clone https://github.com/TheWildJames/zuma-kernel.git --depth=1 kernel
 
     - name: Capture Kernel Common Commit Metadata
       shell: bash
