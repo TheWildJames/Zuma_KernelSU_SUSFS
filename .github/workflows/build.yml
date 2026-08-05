@@ -208,9 +208,6 @@ jobs:
         version: ${{ inputs.version }}
         sublevel: ${{ steps.extract.outputs.sublevel }}
 
-    - name: Remove Protected Exports
-      uses: ./.github/actions/remove-protected-exports
-
     - name: Clean Kernel Flags
       uses: ./.github/actions/clean-kernel-flags
 

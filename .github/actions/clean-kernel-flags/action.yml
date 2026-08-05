@@ -10,7 +10,7 @@ runs:
       run: |
         # Clean dirty flags and ABI exports based on build system
         sed -i "/stable_scmversion_cmd/s/-maybe-dirty//g" build/kernel/kleaf/impl/stamp.bzl
-        sed -i 's/-dirty//' common/scripts/setlocalversion
+        sed -i 's/-dirty//' scripts/setlocalversion
 
         # Commit changes to avoid dirty state during build
         cd ${{ github.workspace }}/kernel
