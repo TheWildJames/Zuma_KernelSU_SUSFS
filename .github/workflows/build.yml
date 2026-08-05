@@ -182,11 +182,6 @@ jobs:
         kernel_version: ${{ inputs.kernel_version }}
         sublevel: ${{ steps.extract.outputs.sublevel }}
 
-    - name: Apply Ptrace Patch
-      uses: ./.github/actions/ptrace
-      with:
-        kernel_version: ${{ inputs.kernel_version }}
-
     - name: Apply Unicode Fix Patch
       uses: ./.github/actions/unicode-fix
       with:
@@ -207,12 +202,6 @@ jobs:
         version: ${{ inputs.version }}
         kernel_version: ${{ inputs.kernel_version }}
         sublevel: ${{ steps.extract.outputs.sublevel }}
-
-    - name: Apply Device-Specific Patches
-      uses: ./.github/actions/apply-device-patches
-      with:
-        version: ${{ inputs.version }}
-        kernel_version: ${{ inputs.kernel_version }}
 
     - name: Apply ABI Compare Bypass
       if: false
@@ -373,15 +362,6 @@ jobs:
         cache_bucket: "bazel-cache"
         compression_level: 9
         github_token: ${{ secrets.MY_GITHUB_TOKEN }}
-
-    - name: Build Bypass Kernel
-      env:
-        SOURCE_DATE_EPOCH: ${{ env.SOURCE_DATE_EPOCH }}
-        KBUILD_BUILD_TIMESTAMP: ${{ env.KBUILD_BUILD_TIMESTAMP }}
-      uses: ./.github/actions/build-kernel
-      with:
-        bypass: true
-        version: ${{ inputs.version }}
 
     - name: 📋 Consolidated Build Summary
       if: ${{ always() }}
