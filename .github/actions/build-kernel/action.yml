@@ -45,29 +45,13 @@ runs:
     shell: bash
     run: |
       mkdir -p /home/runner/out
-      make ARCH=arm64 O=/home/runner/out CC=${{ github.workspace }}/neutron-clang/bin/clang LD=${{ github.workspace }}/neutron-clang/bin/ld.lld AR=${{ github.workspace }}/neutron-clang/bin/llvm-ar NM=${{ github.workspace }}/neutron-clang/bin/llvm-nm OBJCOPY=${{ github.workspace }}/neutron-clang/bin/llvm-objcopy OBJDUMP=${{ github.workspace }}/neutron-clang/bin/llvm-objdump STRIP=${{ github.workspace }}/neutron-clang/bin/llvm-strip CROSS_COMPILE=${{ github.workspace }}/neutron-clang/bin/aarch64-linux-gnu- CROSS_COMPILE_COMPAT=${{ github.workspace }}/neutron-clang/bin/arm-linux-gnueabi- HOSTCC=${{ github.workspace }}/neutron-clang/bin/clang HOSTCXX=${{ github.workspace }}/neutron-clang/bin/clang+ LLVM=1 LLVM_IAS=1 KBUILD_DEFCONFIG=arch/arm64/configs/gki_defconfig -j$(nproc --all) olddefconfig
+      make ARCH=arm64 O=/home/runner/out CC=${{ github.workspace }}/neutron-clang/bin/clang LD=${{ github.workspace }}/neutron-clang/bin/ld.lld AR=${{ github.workspace }}/neutron-clang/bin/llvm-ar NM=${{ github.workspace }}/neutron-clang/bin/llvm-nm OBJCOPY=${{ github.workspace }}/neutron-clang/bin/llvm-objcopy OBJDUMP=${{ github.workspace }}/neutron-clang/bin/llvm-objdump STRIP=${{ github.workspace }}/neutron-clang/bin/llvm-strip CROSS_COMPILE=${{ github.workspace }}/neutron-clang/bin/aarch64-linux-gnu- CROSS_COMPILE_COMPAT=${{ github.workspace }}/neutron-clang/bin/arm-linux-gnueabi- HOSTCC=${{ github.workspace }}/neutron-clang/bin/clang HOSTCXX=${{ github.workspace }}/neutron-clang/bin/clang+ LLVM=1 LLVM_IAS=1 KBUILD_DEFCONFIG=arch/arm64/configs/gki_defconfig -j$(nproc --all) gki_defconfig
 
   - name: Build kernel
     working-directory: ${{ github.workspace }}/kernel
     shell: bash
     run: |
-      make ARCH=arm64 \\
-        O=/home/runner/out \\
-        CC=${{ github.workspace }}/neutron-clang/bin/clang \\
-        LD=${{ github.workspace }}/neutron-clang/bin/ld.lld \\
-        AR=${{ github.workspace }}/neutron-clang/bin/llvm-ar \\
-        NM=${{ github.workspace }}/neutron-clang/bin/llvm-nm \\
-        OBJCOPY=${{ github.workspace }}/neutron-clang/bin/llvm-objcopy \\
-        OBJDUMP=${{ github.workspace }}/neutron-clang/bin/llvm-objdump \\
-        STRIP=${{ github.workspace }}/neutron-clang/bin/llvm-strip \\
-        CROSS_COMPILE=${{ github.workspace }}/neutron-clang/bin/aarch64-linux-gnu- \\
-        CROSS_COMPILE_COMPAT=${{ github.workspace }}/neutron-clang/bin/arm-linux-gnueabi- \\
-        HOSTCC=${{ github.workspace }}/neutron-clang/bin/clang \\
-        HOSTCXX=${{ github.workspace }}/neutron-clang/bin/clang+ \\
-        LLVM=1 \\
-        LLVM_IAS=1 \\
-        LOCALVERSION_AUTO=0 \\
-        -j$(nproc --all)
+      make ARCH=arm64 O=/home/runner/out CC=${{ github.workspace }}/neutron-clang/bin/clang LD=${{ github.workspace }}/neutron-clang/bin/ld.lld AR=${{ github.workspace }}/neutron-clang/bin/llvm-ar NM=${{ github.workspace }}/neutron-clang/bin/llvm-nm OBJCOPY=${{ github.workspace }}/neutron-clang/bin/llvm-objcopy OBJDUMP=${{ github.workspace }}/neutron-clang/bin/llvm-objdump STRIP=${{ github.workspace }}/neutron-clang/bin/llvm-strip CROSS_COMPILE=${{ github.workspace }}/neutron-clang/bin/aarch64-linux-gnu- CROSS_COMPILE_COMPAT=${{ github.workspace }}/neutron-clang/bin/arm-linux-gnueabi- HOSTCC=${{ github.workspace }}/neutron-clang/bin/clang HOSTCXX=${{ github.workspace }}/neutron-clang/bin/clang+ LLVM=1 LLVM_IAS=1 LOCALVERSION_AUTO=0 -j$(nproc --all)
 
   - name: 'Gather Build Artifacts'
     shell: bash
