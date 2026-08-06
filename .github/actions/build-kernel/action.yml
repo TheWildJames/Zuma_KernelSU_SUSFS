@@ -53,7 +53,7 @@ runs:
     shell: bash
     run: |
       export PATH="${{ github.workspace }}/neutron-clang/bin:$PATH"
-      make ARCH=arm64 O=/home/runner/out CC=${{ github.workspace }}/neutron-clang/bin/clang LD=${{ github.workspace }}/neutron-clang/bin/ld.lld AR=${{ github.workspace }}/neutron-clang/bin/llvm-ar NM=${{ github.workspace }}/neutron-clang/bin/llvm-nm OBJCOPY=${{ github.workspace }}/neutron-clang/bin/llvm-objcopy OBJDUMP=${{ github.workspace }}/neutron-clang/bin/llvm-objdump STRIP=${{ github.workspace }}/neutron-clang/bin/llvm-strip HOSTCC=${{ github.workspace }}/neutron-clang/bin/clang HOSTCXX=${{ github.workspace }}/neutron-clang/bin/clang++ LLVM=1 LLVM_IAS=1 LOCALVERSION_AUTO=0 -j$(nproc --all)
+      make ARCH=arm64 O=/home/runner/out CC=${{ github.workspace }}/neutron-clang/bin/clang LD=${{ github.workspace }}/neutron-clang/bin/ld.lld AR=${{ github.workspace }}/neutron-clang/bin/llvm-ar NM=${{ github.workspace }}/neutron-clang/bin/llvm-nm OBJCOPY=${{ github.workspace }}/neutron-clang/bin/llvm-objcopy OBJDUMP=${{ github.workspace }}/neutron-clang/bin/llvm-objdump STRIP=${{ github.workspace }}/neutron-clang/bin/llvm-strip HOSTCC=${{ github.workspace }}/neutron-clang/bin/clang HOSTCXX=${{ github.workspace }}/neutron-clang/bin/clang++ KCFLAGS="-Wno-uninitialized-const-pointer" LLVM=1 LLVM_IAS=1 LOCALVERSION_AUTO=0 -j$(nproc --all)
 
   - name: 'Gather Build Artifacts'
     shell: bash
