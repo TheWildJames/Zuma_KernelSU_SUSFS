@@ -8,10 +8,11 @@ runs:
       run: |
         set -euo pipefail
 
-        # Host build deps for tools/bpf/resolve_btfids (libbpf needs libelf + zlib)
-        # and vmlinux BTF generation (pahole from the dwarves package)
+        # Host build deps for tools/bpf/resolve_btfids (libbpf needs libelf + zlib),
+        # vmlinux BTF generation (pahole from the dwarves package), and the
+        # Image.lz4 compression target (host lz4 tool)
         sudo apt-get update
-        sudo apt-get install -y libelf-dev zlib1g-dev dwarves
+        sudo apt-get install -y libelf-dev zlib1g-dev dwarves lz4
 
         git config --global user.name "github-actions[bot]"
         git config --global user.email "github-actions[bot]@users.noreply.github.com"
