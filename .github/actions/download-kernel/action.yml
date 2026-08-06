@@ -10,7 +10,7 @@ runs:
       working-directory: ${{ github.workspace }}
       run: |
         set -euo pipefail
-        git clone https://github.com/TheWildJames/zuma-kernel.git --depth=1 kernel
+        git clone https://github.com/TheWildJames/zuma-kernel.git -b android14-6.1-2025-12 --depth=1 kernel
 
     - name: Capture Kernel Common Commit Metadata
       shell: bash
