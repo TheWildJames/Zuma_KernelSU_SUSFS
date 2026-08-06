@@ -8,6 +8,10 @@ runs:
       run: |
         set -euo pipefail
 
+        # Host build deps for tools/bpf/resolve_btfids (libbpf needs libelf + zlib)
+        sudo apt-get update
+        sudo apt-get install -y libelf-dev zlib1g-dev
+
         git config --global user.name "github-actions[bot]"
         git config --global user.email "github-actions[bot]@users.noreply.github.com"
 
